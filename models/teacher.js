@@ -11,7 +11,7 @@ const teacherSchema = new mongoose.Schema(
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     isLoggedIn: Boolean,
-    // subjectsTaught: [{ type: mongoose.Schema.Types.ObjectId }],
+    subject: { type: mongoose.Schema.Types.ObjectId, ref: "Subject" },
   },
   {
     timestamps: true,
