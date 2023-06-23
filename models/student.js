@@ -9,14 +9,20 @@ const studentSchema = new mongoose.Schema(
     last_name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     username: { type: String, required: true, unique: true },
+    isLoggedIn: Boolean,
+
     password: { type: String, required: true },
+    teacher: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Teacher",
+    },
   },
   {
     timestamps: true,
   }
 );
 
-studentSchema.prev("save", async function (next) {
+studentSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 8);
   }
@@ -24,6 +30,8 @@ studentSchema.prev("save", async function (next) {
 });
 
 studentSchema.methods.generateAuthToken = async function () {
+  this.isLoggedIn = true;
+  await this.save();
   const token = jwt.sign({ _id: this._id }, process.env.SECRET);
   return token;
 };

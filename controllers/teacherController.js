@@ -61,7 +61,7 @@ exports.updateTeacher = async (req, res) => {
 exports.deleteTeacher = async (req, res) => {
   try {
     await req.user.deleteOne();
-    res.json({ message: "user deleted" });
+    res.json({ message: "teacher deleted" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
