@@ -12,9 +12,9 @@ const studentSchema = new mongoose.Schema(
     isLoggedIn: Boolean,
 
     password: { type: String, required: true },
-    teacher: {
+    class: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Teacher",
+      ref: "Class",
     },
   },
   {

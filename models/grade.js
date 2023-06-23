@@ -5,3 +5,7 @@ const gradeSchema = new mongoose.Schema({
   assignment: { type: mongoose.Schema.Types.ObjectId, ref: "Assignment" },
   score: { type: Number },
 });
+
+const Grade = new mongoose.model("Grade", gradeSchema);
+
+module.exports = Grade;
