@@ -4,7 +4,7 @@ exports.createSubject = async function (req, res) {
   try {
     const subject = new Subject(req.body);
     await subject.save();
-    res.json(res.json);
+    res.json({ subject });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

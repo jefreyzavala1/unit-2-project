@@ -22,6 +22,14 @@ exports.getAssignment = async function (req, res) {
   }
 };
 
+exports.getAllAssigments = async function (req, res) {
+  try {
+    const assignments = await Assignment.find({});
+    res.json(assignments);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 exports.updateAssignment = async (req, res) => {
   try {
     const updates = Object.keys(req.body);

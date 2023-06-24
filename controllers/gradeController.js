@@ -21,6 +21,25 @@ exports.getGrade = async function (req, res) {
     res.status(400).json({ message: error.message });
   }
 };
+
+exports.getAllGrades = async function (req, res) {
+  try {
+    const grades = await Grade.find({});
+    res.json(grades);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.getStudentGrades = async function (req, res) {
+  try {
+    const studentId = req.user._id;
+    const grades = await Grade.find({ student: studentId });
+    res.json(grades);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 exports.updateGrade = async (req, res) => {
   try {
     const updates = Object.keys(req.body);
@@ -30,6 +49,16 @@ exports.updateGrade = async (req, res) => {
     });
     await grade.save();
     res.json(grade);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.getStudentGrades = async function (req, res) {
+  try {
+    const studentId = req.user._id;
+    const grades = await Grade.find({ student: studentId });
+    res.json(grades);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
