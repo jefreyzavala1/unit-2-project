@@ -2,7 +2,7 @@ require("dotenv").config();
 const Teacher = require("../models/teacher");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const Subject = require('../models/subject')
 exports.auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
@@ -20,6 +20,12 @@ exports.auth = async (req, res, next) => {
 
 exports.createTeacher = async (req, res) => {
   try {
+    let subject = await Subject.findOne({name:req.body.subject})
+    if(!subject){
+      subject = await Subject.create({name:req.body.subject})
+      await subject.save()
+    }
+    req.body.subject = subject._id
     const teacher = new Teacher(req.body);
     await teacher.save();
     const token = await teacher.generateAuthToken();
