@@ -58,20 +58,6 @@ exports.updateStudent = async (req, res) => {
   }
 };
 
-exports.deleteStudent = async (req, res) => {
-  try {
-    const studentId = req.params.id;
-    const teacherId = req.user.id;
-    const deleteStudent = await Student.findOneAndDelete({
-      _id: studentId,
-      teacher: teacherId,
-    });
-    res.json({ message: "student deleted" });
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
-
 exports.logoutStudent = async (req, res) => {
   try {
     req.user.isLoggedIn = false;

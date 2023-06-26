@@ -4,7 +4,7 @@ exports.createAssignment = async (req, res) => {
   try {
     const assignment = new Assignment(req.body);
     await assignment.save();
-    res.json(res.json);
+    res.json(assignment);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

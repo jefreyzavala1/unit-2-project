@@ -14,6 +14,6 @@ app.use("/teachers", teacherRoutes);
 app.use("/students", studentRoutes);
 app.use("/subjects", subjectRoutes);
 app.use("/assignments", assignmentRoutes);
-// app.use("/grades", gradeRoutes);
+app.use("/grades", gradeRoutes);
 
 module.exports = app;
