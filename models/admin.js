@@ -27,7 +27,11 @@ const adminSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
-    password: { type: String, required: [true, "Password is required"] },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
+      trim: true,
+    },
     isLoggedIn: Boolean,
   },
   {

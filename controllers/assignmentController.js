@@ -4,13 +4,16 @@ exports.createAssignment = async (req, res) => {
   try {
     const assignment = new Assignment(req.body);
     await assignment.save();
+
+    //would like to give every student an assignment
+
     res.json(assignment);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
-exports.getAssignment = async function (req, res) {
+exports.getAssignment = async (req, res) => {
   try {
     const assignment = await Assignment.findOne({ _id: req.params.id });
     if (!assignment) {
@@ -22,7 +25,7 @@ exports.getAssignment = async function (req, res) {
   }
 };
 
-exports.getAllAssigments = async function (req, res) {
+exports.getAllAssigments = async (req, res) => {
   try {
     const assignments = await Assignment.find({});
     res.json(assignments);

@@ -6,7 +6,6 @@ const assignmentSchema = new mongoose.Schema(
     completed: { type: Boolean },
     subject: { type: mongoose.Schema.Types.ObjectId, ref: "Subject" },
     description: { type: String },
-    
   },
   {
     timestamps: true,

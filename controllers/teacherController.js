@@ -2,7 +2,7 @@ require("dotenv").config();
 const Teacher = require("../models/teacher");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Subject = require('../models/subject')
+const Subject = require("../models/subject");
 exports.auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
@@ -20,12 +20,12 @@ exports.auth = async (req, res, next) => {
 
 exports.createTeacher = async (req, res) => {
   try {
-    let subject = await Subject.findOne({name:req.body.subject})
-    if(!subject){
-      subject = await Subject.create({name:req.body.subject})
-      await subject.save()
+    let subject = await Subject.findOne({ name: req.body.subject });
+    if (!subject) {
+      subject = await Subject.create({ name: req.body.subject });
+      await subject.save();
     }
-    req.body.subject = subject._id
+    req.body.subject = subject._id;
     const teacher = new Teacher(req.body);
     await teacher.save();
     const token = await teacher.generateAuthToken();
@@ -42,7 +42,7 @@ exports.loginTeacher = async (req, res) => {
       !teacher ||
       !(await bcrypt.compare(req.body.password, teacher.password))
     ) {
-      res.status(400).send("Invalid login credentials");
+      res.status(400).json({ message: "Invalid login credentials" });
     } else {
       const token = await teacher.generateAuthToken();
       res.json({ teacher, token });
