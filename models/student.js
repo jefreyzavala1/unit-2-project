@@ -12,7 +12,7 @@ const studentSchema = new mongoose.Schema(
     isLoggedIn: Boolean,
 
     password: { type: String, required: true },
-    class: {
+    className: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Class",
     },

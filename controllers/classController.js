@@ -2,21 +2,44 @@ const Class = require("../models/class");
 
 exports.createClass = async function (req, res) {
   try {
+    req.body.teacher = req.user.id;
+    req.body.subject = req.user.subject;
     const newClass = new Class(req.body);
     await newClass.save();
-    res.json(res.json);
+    res.json(newClass);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
 
+exports.getClass = async (req, res) => {
+  try {
+    const classId = req.params.id;
+    const foundClass = await Class.findOne({ _id: classId });
+    if (!foundClass) {
+      return res.status(404).json({ message: "Class not found" });
+    }
+    res.json(foundClass);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.getAllClasses = async (req, res) => {
+  try {
+    const classes = await Class.find({});
+    res.json(classes);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 exports.updateClass = async function (req, res) {
   try {
     const updates = Object.keys(req.body);
     const foundClass = await Class.findOne({ _id: req.params.id });
     updates.forEach((update) => (foundClass[update] = req.body[update]));
     await foundClass.save();
-    res.json(newClass);
+    res.json(foundClass);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

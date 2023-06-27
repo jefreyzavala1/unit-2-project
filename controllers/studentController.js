@@ -2,6 +2,7 @@ require("dotenv").config();
 const Student = require("../models/student");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Class = require("../models/class");
 
 exports.auth = async (req, res, next) => {
   try {
@@ -21,7 +22,20 @@ exports.auth = async (req, res, next) => {
 exports.createStudent = async (req, res) => {
   try {
     const student = new Student(req.body);
+    console.log(student);
+    console.log(req.body);
+    const className = req.body.className;
+    const foundClass = await Class.findOne({ name: className });
+
+    if (!foundClass) {
+      throw new Error("Class not found");
+    }
+
+    student.className = foundClass._id;
+    foundClass.students.addToSet(student._id);
     await student.save();
+    await foundClass.save();
+
     const token = await student.generateAuthToken();
     res.json({ student, token });
   } catch (error) {

@@ -4,6 +4,7 @@ const Teacher = require("../models/teacher");
 const Student = require("../models/student");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Class = require("../models/class");
 
 exports.auth = async (req, res, next) => {
   try {
@@ -76,8 +77,15 @@ exports.deleteTeacher = async (req, res) => {
     if (!teacher) {
       throw new Error("Teacher not found");
     }
+
+    const foundClass = await Class.findOne({ teacher: teacher._id });
+    if (!foundClass) {
+      throw new Error("Class not found");
+    }
+
+    await foundClass.remove();
     await teacher.remove();
-    res.json({ message: "Teacher successfully deleted" });
+    res.json({ message: "Teacher & class successfully deleted" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -85,11 +93,20 @@ exports.deleteTeacher = async (req, res) => {
 
 exports.deleteStudent = async (req, res) => {
   try {
-    const teacher = await Teacher.findOne({ _id: req.params.id });
-    if (!teacher) {
+    const student = await Student.findOne({ _id: req.params.id });
+    if (!student) {
       throw new Error("Student not found");
     }
-    await teacher.remove();
+
+    const classId = student.class;
+    const foundClass = await Class.findOne({ _id: classId });
+    if (!foundClass) {
+      throw new Error("Class not found");
+    }
+    const studentIndex = foundClass.students.indexOf(student._id);
+    foundClass.students.splice(studentIndex, 1);
+    await foundClass.save();
+    await student.remove();
     res.json({ message: "Student successfully deleted" });
   } catch (error) {
     res.status(400).json({ message: error.message });
