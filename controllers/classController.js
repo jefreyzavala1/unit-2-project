@@ -19,6 +19,9 @@ exports.getClass = async (req, res) => {
     if (!foundClass) {
       return res.status(404).json({ message: "Class not found" });
     }
+    await foundClass.populate("teacher");
+    await foundClass.populate("subject");
+    await foundClass.populate("students");
     res.json(foundClass);
   } catch (error) {
     res.status(400).json({ message: error.message });

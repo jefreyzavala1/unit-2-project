@@ -5,16 +5,35 @@ const jwt = require("jsonwebtoken");
 
 const studentSchema = new mongoose.Schema(
   {
-    first_name: { type: String, required: true },
-    last_name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    username: { type: String, required: true, unique: true },
+    first_name: {
+      type: String,
+      required: [true, "First name is required"],
+      trim: true,
+    },
+    last_name: {
+      type: String,
+      required: [true, "Last name is required"],
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      trim: true,
+    },
+    username: {
+      type: String,
+      required: [true, "Username is require"],
+      unique: true,
+      trim: true,
+    },
     isLoggedIn: Boolean,
 
-    password: { type: String, required: true },
+    password: { type: String, required: [true, "Password is required"] },
     className: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Class",
+      required: [true, "Class is required"],
     },
   },
   {

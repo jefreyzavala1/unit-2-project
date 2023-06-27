@@ -22,8 +22,6 @@ exports.auth = async (req, res, next) => {
 exports.createStudent = async (req, res) => {
   try {
     const student = new Student(req.body);
-    console.log(student);
-    console.log(req.body);
     const className = req.body.className;
     const foundClass = await Class.findOne({ name: className });
 
