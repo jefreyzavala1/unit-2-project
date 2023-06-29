@@ -31,6 +31,10 @@ exports.getClass = async (req, res) => {
 exports.getAllClasses = async (req, res) => {
   try {
     const classes = await Class.find({});
+    for (const clas of classes) {
+      await clas.populate("teacher subject students");
+    }
+
     res.json(classes);
   } catch (error) {
     res.status(400).json({ message: error.message });

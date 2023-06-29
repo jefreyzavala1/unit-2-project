@@ -1,8 +1,16 @@
+const Assignment = require("../models/assignment");
 const Grade = require("../models/grade");
 
 exports.createGrade = async (req, res) => {
   try {
-    const grade = new Grade(req.body);
+    const { student, assignment, score } = req.body;
+    const assignmentDoc = await Assignment.find({ _id: assignment });
+
+    const grade = new Grade({
+      student,
+      assignment,
+      score,
+    });
     await grade.save();
     res.json(grade);
   } catch (error) {

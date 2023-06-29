@@ -35,6 +35,9 @@ const studentSchema = new mongoose.Schema(
       ref: "Class",
       required: [true, "Class is required"],
     },
+    listOfAssignments: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Assignment" },
+    ],
   },
   {
     timestamps: true,

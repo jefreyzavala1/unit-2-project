@@ -1,11 +1,23 @@
 const Assignment = require("../models/assignment");
-
+const Student = require("../models/student");
+const Subject = require("../models/subject");
 exports.createAssignment = async (req, res) => {
   try {
+    let subject = await Subject.findOne({ name: req.body.subject });
+    if (!subject) {
+      subject = await Subject.create({ name: req.body.subject });
+      await subject.save();
+    }
+    req.body.subject = subject._id;
     const assignment = new Assignment(req.body);
     await assignment.save();
 
-    //would like to give every student an assignment
+    const classId = req.body.classId;
+    const students = await Student.find({});
+    for (const student of Students) {
+      await student.listOfAssignments.addToSet(assignment._id);
+      student.save();
+    }
 
     res.json(assignment);
   } catch (error) {

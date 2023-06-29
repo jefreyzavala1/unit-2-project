@@ -54,6 +54,12 @@ exports.loginTeacher = async (req, res) => {
 
 exports.updateTeacher = async (req, res) => {
   try {
+    let subject = await Subject.findOne({ name: req.body.subject });
+    if (!subject) {
+      subject = await Subject.create({ name: req.body.subject });
+      await subject.save();
+    }
+    req.body.subject = subject._id;
     const updates = Object.keys(req.body);
     const teacher = await Teacher.findOne({ _id: req.params.id });
     updates.forEach((update) => (teacher[update] = req.body[update]));
