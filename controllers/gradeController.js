@@ -4,13 +4,13 @@ const Grade = require("../models/grade");
 exports.createGrade = async (req, res) => {
   try {
     const { student, assignment, score } = req.body;
-    const assignmentDoc = await Assignment.find({ _id: assignment });
 
     const grade = new Grade({
       student,
       assignment,
       score,
     });
+
     await grade.save();
     res.json(grade);
   } catch (error) {

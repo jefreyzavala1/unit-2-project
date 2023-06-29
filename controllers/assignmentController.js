@@ -12,9 +12,8 @@ exports.createAssignment = async (req, res) => {
     const assignment = new Assignment(req.body);
     await assignment.save();
 
-    const classId = req.body.classId;
     const students = await Student.find({});
-    for (const student of Students) {
+    for (const student of students) {
       await student.listOfAssignments.addToSet(assignment._id);
       student.save();
     }
