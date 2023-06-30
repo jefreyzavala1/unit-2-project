@@ -6,6 +6,7 @@ exports.createClass = async (req, res) => {
     req.body.subject = req.user.subject;
     const newClass = new Class(req.body);
     await newClass.save();
+    await newClass.populate("teacher subject");
     res.json(newClass);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -30,10 +31,15 @@ exports.getClass = async (req, res) => {
 
 exports.getAllClasses = async (req, res) => {
   try {
-    const classes = await Class.find({});
-    for (const clas of classes) {
-      await clas.populate("teacher subject students");
-    }
+    const classes = await Class.find({})
+      .populate("teacher")
+      .populate("subject")
+      .populate({
+        path: "students",
+        populate: {
+          path: "listOfAssignments",
+        },
+      });
 
     res.json(classes);
   } catch (error) {

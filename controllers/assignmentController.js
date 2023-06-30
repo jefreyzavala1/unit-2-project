@@ -44,6 +44,25 @@ exports.getAllAssigments = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+exports.getAllCompletedAssignments = async (req, res) => {
+  try {
+    const assignments = await Assignment.find({ completed: true });
+    res.json(assignments);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.getAllIncompleteAssignments = async (req, res) => {
+  try {
+    const assignments = await Assignment.find({ completed: false });
+    res.json(assignments);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 exports.updateAssignment = async (req, res) => {
   try {
     const updates = Object.keys(req.body);

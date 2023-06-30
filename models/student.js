@@ -38,6 +38,7 @@ const studentSchema = new mongoose.Schema(
     listOfAssignments: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Assignment" },
     ],
+    listOfSubmissions:[]
   },
   {
     timestamps: true,

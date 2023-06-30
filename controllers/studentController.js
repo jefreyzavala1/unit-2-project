@@ -3,7 +3,7 @@ const Student = require("../models/student");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Class = require("../models/class");
-
+const Assignment = require("../models/assignment");
 exports.auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
@@ -33,9 +33,7 @@ exports.createStudent = async (req, res) => {
     foundClass.students.addToSet(student._id);
     await student.save();
     await foundClass.save();
-
-    const token = await student.generateAuthToken();
-    res.json({ student, token });
+    res.json({ student });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -70,6 +68,59 @@ exports.updateStudent = async (req, res) => {
   }
 };
 
+exports.getMyAssignments = async (req, res) => {
+  try {
+    console.log(req.user._id);
+    const studentAssignment = await Student.findOne({
+      _id: req.user._id,
+    }).populate("listOfAssignments");
+
+    res.json(studentAssignment.listOfAssignments);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.markAssignmentAsComplete = async (req, res) => {
+  try {
+    const studentAssignment = await Student.findOne({
+      _id: req.user._id,
+    }).populate("listOfAssignments");
+
+    const findAssignmentInArray = studentAssignment.listOfAssignments;
+    for (const assignment of findAssignmentInArray) {
+      if (assignment._id.toString() === req.params.id) {
+        const updatedAssignment = new Assignment({
+          name: assignment.name,
+          subject: assignment.subject,
+          description: assignment.description,
+          completed: true,
+          user: req.user._id,
+        });
+
+        await updatedAssignment.save();
+
+        const index = studentAssignment.listOfAssignments.findIndex(
+          (a) => a._id.toString() === req.params.id
+        );
+        studentAssignment.listOfAssignments.splice(
+          index,
+          1,
+          updatedAssignment._id
+        );
+        await studentAssignment.populate("listOfAssignments").execPopulate();
+
+        await studentAssignment.save();
+
+        break;
+      }
+    }
+
+    res.json(studentAssignment);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 exports.logoutStudent = async (req, res) => {
   try {
     req.user.isLoggedIn = false;

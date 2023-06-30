@@ -28,8 +28,7 @@ exports.createTeacher = async (req, res) => {
     req.body.subject = subject._id;
     const teacher = new Teacher(req.body);
     await teacher.save();
-    const token = await teacher.generateAuthToken();
-    res.json({ teacher, token });
+    res.json({ teacher });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
