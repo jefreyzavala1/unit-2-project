@@ -1,6 +1,5 @@
 const Submission = require("../models/submission");
 const Student = require("../models/student");
-const { json } = require("body-parser");
 exports.createSubmission = async function (req, res) {
   try {
     const studentAssignment = await Student.findOne({
@@ -20,6 +19,7 @@ exports.createSubmission = async function (req, res) {
       ? req.user.listOfSubmissions.addToSet({ _id: submission._id })
       : (req.user.listOfSubmissions = [{ _id: submission._id }]);
     await req.user.save();
+    await submission.save();
     res.json(submission);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -28,11 +28,22 @@ exports.createSubmission = async function (req, res) {
 
 exports.showAllSubmissions = async (req, res) => {
   try {
-    const submissions = await Submission.find({});
-    await submissions.populate("assignment student");
+    const submissions = await Submission.find({})
+      .populate("assignment")
+      .populate("student");
     res.json(submissions);
-  } catch (error) {}
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
-
-exports.showSubmissionBasedOneAssignment = asy
+exports.showSubmissionBasedOnAssignment = async (req, res) => {
+  try {
+    const submissions = await Submission.find({ assignment: req.params.id })
+      .populate("assignment")
+      .populate("student");
+    res.json(submissions);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};

@@ -9,5 +9,15 @@ router.post(
   studentController.auth,
   submissionController.createSubmission
 );
+router.get(
+  "/assignments/",
+  teacherController.auth,
+  submissionController.showAllSubmissions
+);
 
+router.get(
+  "/assignments/:id",
+  teacherController.auth,
+  submissionController.showSubmissionBasedOnAssignment
+);
 module.exports = router;

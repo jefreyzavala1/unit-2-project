@@ -9,7 +9,7 @@ const submissionSchema = new mongoose.Schema(
     },
     submitted: { type: Boolean },
     student: {
-      type: mongoose.mongo.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
       required: true,
     },
