@@ -2,6 +2,9 @@ const Class = require("../models/class");
 
 exports.createClass = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     req.body.teacher = req.user.id;
     req.body.subject = req.user.subject;
     const newClass = new Class(req.body);
@@ -48,6 +51,9 @@ exports.getAllClasses = async (req, res) => {
 };
 exports.updateClass = async function (req, res) {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const updates = Object.keys(req.body);
     const foundClass = await Class.findOne({ _id: req.params.id });
     updates.forEach((update) => (foundClass[update] = req.body[update]));
@@ -60,6 +66,9 @@ exports.updateClass = async function (req, res) {
 
 exports.deleteClass = async function (req, res) {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     await Class.findOneAndRemove({ _id: req.params.id });
     res.json({ message: "class deleted" });
   } catch (error) {

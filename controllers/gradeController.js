@@ -3,6 +3,9 @@ const Grade = require("../models/grade");
 
 exports.createGrade = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const { student, assignment, score } = req.body;
 
     const grade = new Grade({
@@ -20,6 +23,9 @@ exports.createGrade = async (req, res) => {
 
 exports.getGrade = async function (req, res) {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const grade = await Grade.findOne({ _id: req.params.id });
     if (!grade) {
       return res.status(404).json({ message: "Grade not found" });
@@ -32,6 +38,9 @@ exports.getGrade = async function (req, res) {
 
 exports.getAllGrades = async function (req, res) {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const grades = await Grade.find({});
     res.json(grades);
   } catch (error) {
@@ -41,6 +50,9 @@ exports.getAllGrades = async function (req, res) {
 
 exports.getStudentGrades = async function (req, res) {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const studentId = req.user._id;
     const grades = await Grade.find({ student: studentId });
     res.json(grades);
@@ -50,6 +62,9 @@ exports.getStudentGrades = async function (req, res) {
 };
 exports.updateGrade = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const updates = Object.keys(req.body);
     const grade = await Grade.findOne({ _id: req.params.id });
     if (!grade) {
@@ -67,6 +82,9 @@ exports.updateGrade = async (req, res) => {
 
 exports.deleteGrade = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     await Grade.findOneAndRemove({ _id: req.params.id });
     res.json({ message: "grade deleted" });
   } catch (error) {

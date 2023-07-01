@@ -3,6 +3,9 @@ const Student = require("../models/student");
 const Subject = require("../models/subject");
 exports.createAssignment = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     let subject = await Subject.findOne({ name: req.body.subject });
     if (!subject) {
       subject = await Subject.create({ name: req.body.subject });
@@ -65,6 +68,9 @@ exports.getAllIncompleteAssignments = async (req, res) => {
 
 exports.updateAssignment = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const updates = Object.keys(req.body);
     const assignment = await Assignment.findOne({ _id: req.params.id });
     if (!assignment) {
@@ -80,6 +86,9 @@ exports.updateAssignment = async (req, res) => {
 
 exports.deleteAssignment = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const assignment = await Assignment.findOneAndRemove({
       _id: req.params.id,
     });

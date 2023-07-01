@@ -2,6 +2,9 @@ const Submission = require("../models/submission");
 const Student = require("../models/student");
 exports.createSubmission = async function (req, res) {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const studentAssignment = await Student.findOne({
       _id: req.user._id,
     });
@@ -28,6 +31,9 @@ exports.createSubmission = async function (req, res) {
 
 exports.showAllSubmissions = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const submissions = await Submission.find({})
       .populate("assignment")
       .populate("student");
@@ -39,9 +45,24 @@ exports.showAllSubmissions = async (req, res) => {
 
 exports.showSubmissionBasedOnAssignment = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const submissions = await Submission.find({ assignment: req.params.id })
       .populate("assignment")
       .populate("student");
+    res.json(submissions);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+exports.studentViewsTheirSubmissions = async (req, res) => {
+  try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
+    const submissions = await Submission.find({ student: req.user._id });
     res.json(submissions);
   } catch (error) {
     res.status(400).json({ message: error.message });

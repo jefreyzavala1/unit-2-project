@@ -20,4 +20,10 @@ router.get(
   teacherController.auth,
   submissionController.showSubmissionBasedOnAssignment
 );
+
+router.get(
+  "/student/Assignments",
+  studentController.auth,
+  submissionController.studentViewsTheirSubmissions
+);
 module.exports = router;

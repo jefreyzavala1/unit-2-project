@@ -58,6 +58,9 @@ exports.loginStudent = async (req, res) => {
 
 exports.updateStudent = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const updates = Object.keys(req.body);
     const student = await Student.findOne({ _id: req.params.id });
     updates.forEach((update) => (student[update] = req.body[update]));
@@ -70,7 +73,9 @@ exports.updateStudent = async (req, res) => {
 
 exports.getMyAssignments = async (req, res) => {
   try {
-    console.log(req.user._id);
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const studentAssignment = await Student.findOne({
       _id: req.user._id,
     }).populate("listOfAssignments");
@@ -83,6 +88,9 @@ exports.getMyAssignments = async (req, res) => {
 
 exports.markAssignmentAsComplete = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const studentAssignment = await Student.findOne({
       _id: req.user._id,
     }).populate("listOfAssignments");

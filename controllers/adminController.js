@@ -48,6 +48,9 @@ exports.loginAdmin = async (req, res) => {
 
 exports.updateAdmin = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const updates = Object.keys(req.body);
     const admin = await Admin.findOne({ _id: red.params.id });
     updates.forEach((update) => (admin[update] = req.body[update]));
@@ -60,6 +63,9 @@ exports.updateAdmin = async (req, res) => {
 
 exports.deleteAdmin = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const admin = await Admin.findOne({ _id: req.params.id });
     if (!admin) {
       throw new Error("Admin not found");
@@ -73,6 +79,9 @@ exports.deleteAdmin = async (req, res) => {
 
 exports.deleteTeacher = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const teacher = await Teacher.findOne({ _id: req.params.id });
     if (!teacher) {
       throw new Error("Teacher not found");
@@ -93,6 +102,9 @@ exports.deleteTeacher = async (req, res) => {
 
 exports.deleteStudent = async (req, res) => {
   try {
+    if (!req.user.isLoggedIn) {
+      return res.status(400).json({ message: "Please Log in" });
+    }
     const student = await Student.findOne({ _id: req.params.id });
     if (!student) {
       throw new Error("Student not found");
