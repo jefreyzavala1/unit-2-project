@@ -26,6 +26,7 @@ const studentSchema = new mongoose.Schema(
       required: [true, "Username is require"],
       unique: true,
       trim: true,
+      index: true,
     },
     isLoggedIn: Boolean,
 
@@ -38,7 +39,7 @@ const studentSchema = new mongoose.Schema(
     listOfAssignments: [
       { type: mongoose.Schema.Types.ObjectId, ref: "Assignment" },
     ],
-    listOfSubmissions:[]
+    listOfSubmissions: [],
   },
   {
     timestamps: true,

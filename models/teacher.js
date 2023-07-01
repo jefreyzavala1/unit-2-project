@@ -25,6 +25,7 @@ const teacherSchema = new mongoose.Schema(
       required: [true, "Username is required"],
       unique: true,
       trim: true,
+      index: true,
     },
     password: {
       type: String,
@@ -44,9 +45,17 @@ const teacherSchema = new mongoose.Schema(
   }
 );
 
+async function isUsernameUnique(username) {
+  const count = await Teacher.countDocuments({ username });
+  return count === 0 ? 1 : 0;
+}
 teacherSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 8);
+  }
+
+  if (!(await isUsernameUnique(this.username))) {
+    return next(new Error("Username must be unique"));
   }
   next();
 });

@@ -1,0 +1,26 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 20
+
+scenarios:
+  - flow:
+      - post:
+          url: "/teachers"
+          json:
+            first_name: "Arthur"
+            last_name: "Bernier"
+            email: "arthur@gmail.com"
+            username: "arthurb"
+            password: "test123"
+            subject: "SEI"
+  - flow:
+      - post:
+          url: "/classes"
+          json:
+            first_name: "Jefrey"
+            last_name: "Doe"
+            email: "john@gmail.com"
+            username: "johnd"
+            password: "test123"

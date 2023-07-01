@@ -34,3 +34,19 @@
   <pre><code>npm start</code></pre>
 
   <p>The application should now be running on <code>http://localhost:3000</code>.</p>
+
+<h2>Wireframes</h2>
+<p>Below are wireframes for the project:</p>
+<h3>Wireframe 1</h3>
+  <img src="assets/LandingPage.png" alt="Landing Page">
+
+  <h3>Wireframe 2</h3>
+  <img src="assets/teacher-dashboard1.png" alt="Teacher Dashboard">
+
+  <h3>Wireframe 3</h3>
+  <img src="assets/sign-up-page1.png" alt="Sign up page">
+
+  <h3>Wireframe 4</h3>
+  <img src="assets/update-page.png" alt="Update page">
+
+  <p>For more detailed wireframes and project planning, please refer to my <a href="https://trello.com/b/SDgT0nLh/grade-book-api">Trello board</a>.</p>
