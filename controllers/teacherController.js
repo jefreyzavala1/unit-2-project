@@ -41,7 +41,7 @@ exports.loginTeacher = async (req, res) => {
       !teacher ||
       !(await bcrypt.compare(req.body.password, teacher.password))
     ) {
-      res.status(400).json({ message: "Invalid login credentials" });
+      throw new Error("Invalid login credentials");
     } else {
       const token = await teacher.generateAuthToken();
       res.json({ teacher, token });

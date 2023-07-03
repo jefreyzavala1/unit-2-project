@@ -86,49 +86,6 @@ exports.getMyAssignments = async (req, res) => {
   }
 };
 
-exports.markAssignmentAsComplete = async (req, res) => {
-  try {
-    if (!req.user.isLoggedIn) {
-      return res.status(400).json({ message: "Please Log in" });
-    }
-    const studentAssignment = await Student.findOne({
-      _id: req.user._id,
-    }).populate("listOfAssignments");
-
-    const findAssignmentInArray = studentAssignment.listOfAssignments;
-    for (const assignment of findAssignmentInArray) {
-      if (assignment._id.toString() === req.params.id) {
-        const updatedAssignment = new Assignment({
-          name: assignment.name,
-          subject: assignment.subject,
-          description: assignment.description,
-          completed: true,
-          user: req.user._id,
-        });
-
-        await updatedAssignment.save();
-
-        const index = studentAssignment.listOfAssignments.findIndex(
-          (a) => a._id.toString() === req.params.id
-        );
-        studentAssignment.listOfAssignments.splice(
-          index,
-          1,
-          updatedAssignment._id
-        );
-        await studentAssignment.populate("listOfAssignments").execPopulate();
-
-        await studentAssignment.save();
-
-        break;
-      }
-    }
-
-    res.json(studentAssignment);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
 exports.logoutStudent = async (req, res) => {
   try {
     req.user.isLoggedIn = false;

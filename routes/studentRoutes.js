@@ -10,11 +10,7 @@ router.get(
 );
 router.post("/", studentController.createStudent);
 router.post("/login", studentController.loginStudent);
-router.put(
-  "/assignments/:id",
-  studentController.auth,
-  studentController.markAssignmentAsComplete
-);
+
 router.put("/:id", studentController.auth, studentController.updateStudent);
 router.post("/logout", studentController.auth, studentController.logoutStudent);
 
