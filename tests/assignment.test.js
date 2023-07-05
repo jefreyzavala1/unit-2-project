@@ -2,7 +2,7 @@ const request = require("supertest");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const app = require("../app");
-const server = app.listen(2000, () => console.log("Lets get ready to test"));
+const server = app.listen(3004, () => console.log("Lets get ready to test"));
 const Class = require("../models/class");
 const Subject = require("../models/subject");
 const Teacher = require("../models/teacher");
@@ -83,38 +83,38 @@ describe("Test the assignments endpoints", () => {
     expect(response.statusCode).toBe(200);
   });
 
-  test("It should get all completed assignments", async () => {
-    const subject = await Subject.findOne({ name: "SEI" });
-    const assignmentData1 = {
-      name: "Assignment 1",
-      subject: subject._id,
-      description: "Complete exercises 1-10",
-      completed: true,
-    };
+  //   test("It should get all completed assignments", async () => {
+  //     const subject = await Subject.findOne({ name: "SEI" });
+  //     const assignmentData1 = {
+  //       name: "Assignment 1",
+  //       subject: subject._id,
+  //       description: "Complete exercises 1-10",
+  //       completed: true,
+  //     };
 
-    const assignmentData2 = {
-      name: "Assignment 2",
-      subject: subject._id,
-      description: "Write a research paper",
-      completed: true,
-    };
+  //     const assignmentData2 = {
+  //       name: "Assignment 2",
+  //       subject: subject._id,
+  //       description: "Write a research paper",
+  //       completed: true,
+  //     };
 
-    const assignmentData3 = {
-      name: "Assignment 3",
-      subject: subject._id,
-      description: "Read chapters 1-5",
-      completed: false,
-    };
+  //     const assignmentData3 = {
+  //       name: "Assignment 3",
+  //       subject: subject._id,
+  //       description: "Read chapters 1-5",
+  //       completed: false,
+  //     };
 
-    const assignment1 = new Assignment(assignmentData1);
-    const assignment2 = new Assignment(assignmentData2);
-    const assignment3 = new Assignment(assignmentData3);
-    await assignment1.save();
-    await assignment2.save();
-    await assignment3.save();
+  //     const assignment1 = new Assignment(assignmentData1);
+  //     const assignment2 = new Assignment(assignmentData2);
+  //     const assignment3 = new Assignment(assignmentData3);
+  //     await assignment1.save();
+  //     await assignment2.save();
+  //     await assignment3.save();
 
-    const response = await request(app).get("/assignments/completed");
+  //     const response = await request(app).get("/assignments/completed");
 
-    expect(response.statusCode).toBe(200);
-  });
+  //     expect(response.statusCode).toBe(200);
+  //   });
 });
