@@ -2,7 +2,7 @@ const request = require("supertest");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const app = require("../app");
-const server = app.listen(3000, () => console.log("Lets get ready to test"));
+const server = app.listen(2000, () => console.log("Lets get ready to test"));
 const Class = require("../models/class");
 const Subject = require("../models/subject");
 const Teacher = require("../models/teacher");

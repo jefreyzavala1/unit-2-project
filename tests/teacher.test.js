@@ -42,61 +42,38 @@ describe("Test the teachers endpoints", () => {
     console.log(response.body);
     expect(response.statusCode).toBe(200);
   });
+
+  test("It should update a teacher", async () => {
+    const teacher = await Teacher.findOne({ username: "arthurb" });
+    const subject = new Subject({
+      name: "SEI",
+      description:
+        "An interactive website for students currently enrolled in the General Assembly Software Engineering Immersive Remote Flex Program",
+    });
+    await subject.save();
+    const token = await teacher.generateAuthToken();
+
+    const response = await request(app)
+      .put(`/teachers/${teacher._id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        last_name: "bernier jr",
+        email: "arthurbernierjr@gmail.com",
+        subject: subject._id,
+      });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.last_name).toEqual("bernier jr");
+    expect(response.body.email).toEqual("arthurbernierjr@gmail.com");
+  });
+  test("It should log out a teacher", async () => {
+    const teacher = await Teacher.findOne({ username: "arthurb" });
+    const token = await teacher.generateAuthToken();
+    const response = await request(app)
+      .post("/teachers/logout")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toEqual("User successfully logged out");
+  });
 });
-
-// test("It should update a teacher", async () => {
-//   const subject = await Subject.create({
-//     name: "SEI",
-//     description:
-//       "An interactive website for students currently enrolled in the General Assembly Software Engineering Immersive Remote Flex Program",
-//   });
-//   await subject.save();
-//   const teacher = new Teacher({
-//     first_name: "arthur",
-//     last_name: "bernier",
-//     email: "arthurbernier@gmail.com",
-//     username: "arthurjr",
-//     password: "test123",
-//     subject: subject._id,
-//   });
-//   await teacher.save();
-//   const token = await teacher.generateAuthToken();
-
-//   const response = await request(app)
-//     .put(`/teachers/${teacher._id}`)
-//     .set("Authorization", `Bearer ${token}`)
-//     .send({
-//       last_name: "bernier jr",
-//       email: "arthurbernierjr@gmail.com",
-//       subject: subject._id,
-//     });
-
-//   expect(response.statusCode).toBe(200);
-//   expect(response.body.last_name).toEqual("bernier jr");
-//   expect(response.body.email).toEqual("arthurbernierjr@gmail.com");
-// });
-
-// test("It should log out a teacher", async () => {
-//   const subject = await Subject.create({
-//     name: "SEI",
-//     description:
-//       "An interactive website for students currently enrolled in the General Assembly Software Engineering Immersive Remote Flex Program",
-//   });
-//   await subject.save();
-//   const teacher = new Teacher({
-//     first_name: "arthur",
-//     last_name: "bernier",
-//     email: "arthurbernier1@gmail.com",
-//     username: "arthurjr1",
-//     password: "test123",
-//     subject: subject._id,
-//   });
-//   await teacher.save();
-//   const token = await teacher.generateAuthToken();
-//   const response = await request(app)
-//     .post("/teachers/logout")
-//     .set("Authorization", `Bearer ${token}`);
-
-//   expect(response.statusCode).toBe(200);
-//   expect(response.body.message).toEqual("User successfully logged out");
-// });
