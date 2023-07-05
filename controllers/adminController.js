@@ -9,7 +9,7 @@ const Class = require("../models/class");
 exports.auth = async (req, res, next) => {
   try {
     const token = req.header("Authorization").replace("Bearer ", "");
-    const data = jwt.verify(token, proces.env.SECRET);
+    const data = jwt.verify(token, process.env.SECRET);
     const admin = await Admin.findOne({ _id: data._id });
     if (!admin) {
       throw new Error();
@@ -25,7 +25,7 @@ exports.createAdmin = async (req, res) => {
   try {
     const admin = new Admin(req.body);
     await admin.save();
-    res.json({ admin, token });
+    res.json({ admin });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -52,7 +52,7 @@ exports.updateAdmin = async (req, res) => {
       return res.status(400).json({ message: "Please Log in" });
     }
     const updates = Object.keys(req.body);
-    const admin = await Admin.findOne({ _id: red.params.id });
+    const admin = await Admin.findOne({ _id: req.params.id });
     updates.forEach((update) => (admin[update] = req.body[update]));
     await admin.save();
     res.json(admin);
@@ -70,7 +70,7 @@ exports.deleteAdmin = async (req, res) => {
     if (!admin) {
       throw new Error("Admin not found");
     }
-    await admin.remove();
+    await admin.deleteOne();
     res.json({ message: "Admin successfully deleted" });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -92,8 +92,8 @@ exports.deleteTeacher = async (req, res) => {
       throw new Error("Class not found");
     }
 
-    await foundClass.remove();
-    await teacher.remove();
+    await foundClass.deleteOne();
+    await teacher.deleteOne();
     res.json({ message: "Teacher & class successfully deleted" });
   } catch (error) {
     res.status(400).json({ message: error.message });

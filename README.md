@@ -35,6 +35,33 @@
 
   <p>The application should now be running on <code>http://localhost:3000</code>.</p>
 
+<h2>API Requests in Postman</h2>
+<p>To make an API request using Postman:</p>
+<ol>
+  <li>Open Postman.</li>
+  <li>Set the request method (GET, POST, PUT, DELETE).</li>
+  <li>Enter the request URL based on the available routes and endpoints. For example, to create a new teacher, send a POST request to <code>http://localhost:3000/teachers</code>.</li>
+  <li>Set the necessary request headers, body, and authentication.</li>
+</ol>
+
+<h2>Running Tests</h2>
+<p>To run the tests:</p>
+<ol>
+  <li>Ensure the app is not running.</li>
+  <li>Execute the following command:</li>
+</ol>
+
+<pre><code>npm test</code></pre>
+
+<h2>Running Load Tests</h2>
+<p>To run load tests:</p>
+<ol>
+  <li>Ensure the app is running.</li>
+  <li>Execute the following command:</li>
+</ol>
+
+<pre><code>npm run load</code></pre>
+
 <h2>Wireframes</h2>
 <p>Below are wireframes for the project:</p>
 <h3>Wireframe 1</h3>

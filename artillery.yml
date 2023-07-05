@@ -5,22 +5,17 @@ config:
       arrivalRate: 20
 
 scenarios:
-  - flow:
+  - name: "Teacher Login"
+    flow:
       - post:
-          url: "/teachers"
+          url: "/teachers/login"
           json:
-            first_name: "Arthur"
-            last_name: "Bernier"
-            email: "arthur@gmail.com"
             username: "arthurb"
             password: "test123"
-            subject: "SEI"
-  - flow:
+  - name: "Create Assignments"
+    flow:
       - post:
-          url: "/classes"
+          url: "/assignments"
           json:
-            first_name: "Jefrey"
-            last_name: "Doe"
-            email: "john@gmail.com"
-            username: "johnd"
-            password: "test123"
+            name: "Project 1"
+            description: "Create a web application"
