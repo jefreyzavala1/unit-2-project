@@ -31,7 +31,7 @@
   <h2>Running the Project</h2>
   <p>To start the project, run the following command:</p>
 
-  <pre><code>npm start</code></pre>
+  <pre><code>npm run dev</code></pre>
 
   <p>The application should now be running on <code>http://localhost:3000</code>.</p>
 
