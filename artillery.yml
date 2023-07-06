@@ -12,6 +12,9 @@ scenarios:
           json:
             username: "arthurb"
             password: "test123"
+        capture:
+          - json: "$.token"
+            as: "accessToken"
   - name: "Create Assignments"
     flow:
       - post:
@@ -19,3 +22,5 @@ scenarios:
           json:
             name: "Project 1"
             description: "Create a web application"
+        headers:
+          Authorization: "Bearer {{accessToken}}"

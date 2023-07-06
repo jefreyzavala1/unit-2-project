@@ -38,11 +38,25 @@
 <h2>API Requests in Postman</h2>
 <p>To make an API request using Postman:</p>
 <ol>
-  <li>Open Postman.</li>
-  <li>Set the request method (GET, POST, PUT, DELETE).</li>
-  <li>Enter the request URL based on the available routes and endpoints. For example, to create a new teacher, send a POST request to <code>http://localhost:3000/teachers</code>.</li>
-  <li>Set the necessary request headers, body, and authentication.</li>
+  <li>Open Postman and make sure your server is running locally on <code>http://localhost:3000</code>.</li>
+  <li>Select the HTTP method as <strong>POST</strong>.</li>
+  <li>Enter the request URL as <code>http://localhost:3000/teachers</code>.</li>
+  <li>Set the request headers:</li>
 </ol>
+<pre><code>
+Content-Type: application/json
+</code></pre>
+<p>In the request body, select the <strong>raw</strong> option and choose <strong>JSON</strong> from the dropdown.</p>
+<p>Enter the following JSON object as the request body:</p>
+<pre><code>{
+  "first_name": "arthur",
+  "last_name": "bernier",
+  "email": "arthurb@gmail.com",
+  "username": "arthurb",
+  "password": "test123",
+  "subject": "SEI"
+}</code></pre>
+<p>Click the <strong>Send</strong> button to submit the request.</p>
 
 <h2>Running Tests</h2>
 <p>To run the tests:</p>
@@ -75,5 +89,8 @@
 
   <h3>Wireframe 4</h3>
   <img src="assets/update-page.png" alt="Update page">
+
+  <h3>ERD Diagram</h3>
+  <img src="assets/models.PNG" alt="ERD Diagram>
 
   <p>For more detailed wireframes and project planning, please refer to my <a href="https://trello.com/b/SDgT0nLh/grade-book-api">Trello board</a>.</p>

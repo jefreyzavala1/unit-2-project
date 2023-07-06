@@ -8,7 +8,6 @@ exports.createSubmission = async function (req, res) {
     const studentAssignment = await Student.findOne({
       _id: req.user._id,
     });
-    console.log(studentAssignment);
 
     studentAssignment.listOfAssignments.pull(req.params.id);
 
