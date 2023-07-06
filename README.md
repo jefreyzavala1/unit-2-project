@@ -91,6 +91,6 @@ Content-Type: application/json
   <img src="assets/update-page.png" alt="Update page">
 
   <h3>ERD Diagram</h3>
-  <img src="assets/models.PNG" alt="ERD Diagram>
+  <img src="assets/models.PNG" alt="ERD Diagram">
 
   <p>For more detailed wireframes and project planning, please refer to my <a href="https://trello.com/b/SDgT0nLh/grade-book-api">Trello board</a>.</p>
