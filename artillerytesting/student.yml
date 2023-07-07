@@ -1,0 +1,18 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 20
+
+scenarios:
+  - name: "Create Students"
+    flow:
+      - post:
+          url: "/students"
+          json:
+            first_name: "John"
+            last_name: "Doe"
+            email: "{{ random 'email' }}"
+            username: "{{ random 'username' }}"
+            password: "test123"
+            className: "{{ random ['Donna', 'Frances'] }}"

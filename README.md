@@ -29,9 +29,13 @@
   <p>Replace <code>mongodb://your-mongodb-uri</code> with your actual MongoDB connection URI, and <code>your-secret-key</code> with your desired secret key for authentication.</p>
 
   <h2>Running the Project</h2>
-  <p>To start the project, run the following command:</p>
+  <p>To start the projec with dev mode , run the following command:</p>
 
   <pre><code>npm run dev</code></pre>
+
+   <p>To start the projec without dev mode , run the following command:</p>
+
+  <pre><code>npm start</code></pre>
 
   <p>The application should now be running on <code>http://localhost:3000</code>.</p>
 

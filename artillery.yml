@@ -15,12 +15,14 @@ scenarios:
         capture:
           - json: "$.token"
             as: "accessToken"
+            log: true
+
   - name: "Create Assignments"
     flow:
       - post:
           url: "/assignments"
           json:
-            name: "Project 1"
-            description: "Create a web application"
+            name: "Project 2"
+            description: "Create an API"
         headers:
           Authorization: "Bearer {{accessToken}}"
