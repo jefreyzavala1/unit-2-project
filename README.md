@@ -1,4 +1,5 @@
 <h1>GradeHub : GradeBook API</h1>
+<p>A web api that allows teachers to manage their classes, enabling them to track their students' progress. Additionally, students can view their grades and submit assignments.</p>
 <h2>Prerequisites</h2>
 <p>Before running this project, ensure that you have the following installed:</p>
 <ul>
